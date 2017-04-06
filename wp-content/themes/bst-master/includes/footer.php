@@ -1,4 +1,3 @@
-
 <footer id="site-footer">
 	<div class="container-fluid">
 		<div class="row">
