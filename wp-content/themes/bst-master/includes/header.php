@@ -22,7 +22,7 @@
 
 <header>
 <nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid"><!-- container-fluid -->
+  <div class="container-fluid"><!-- container -->
     <div class="navbar-header"><!-- navbar-header -->
       <div id="headerimg">
         <h1>
@@ -37,13 +37,27 @@
           </a>
         </h1>
       </div>
-    </div><!-- /.navbar-header -->
+    </div>
 
     <ul id="nav2">
         <li><a href="notre-agence/" id="topMenu1"  <?php if($id==94){ ?>class="vosProjets"<?php } ?>>De notre image...</a></li>
         <li><a href="vos-projets/" id="topMenu2"  <?php if($id==94){ ?>class="vosProjets"<?php } ?>>... à vos images</a></li>
     </ul>
 
-  </div><!-- /.container-fluid -->
+    <div class="collapse navbar-collapse" id="navbar">
+      <?php if($id!=94){ ?>
+          <?php
+          wp_nav_menu( array(
+                  'theme_location'    => 'navbar-right',
+                  'depth'             => 2,
+                  'menu_class'        => 'nav navbar-nav navbar-right',
+                  'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
+                  'walker'            => new wp_bootstrap_navwalker())
+          );
+          ?>
+      <?php } ?>
+    </div><!-- /.navbar-header -->
+
+  </div><!-- /.container -->
 </nav>
 </header>
