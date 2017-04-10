@@ -28,7 +28,6 @@ $wp_file_descriptions = array(
 	'tag.php' => __( 'Tag Template' ),
 	'category.php' => __( 'Category Template' ),
 	'page.php' => __( 'Page Template' ),
-	'search.php' => __( 'Search Results' ),
 	'searchform.php' => __( 'Search Form' ),
 	'single.php' => __( 'Single Post' ),
 	'404.php' => __( '404 Template' ),
