@@ -11,10 +11,6 @@ require_once locate_template('/functions/setup.php');
 require_once locate_template('/functions/enqueues.php');
 require_once locate_template('/functions/navbar.php');
 require_once locate_template('/functions/widgets.php');
-require_once locate_template('/functions/cpt-realisations.php');
-require_once locate_template('/functions/cpt-equipe.php');
-
-
 
 function true_load_theme_textdomain(){
     load_theme_textdomain( 'bst', get_template_directory() . '/languages' );
