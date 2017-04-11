@@ -616,22 +616,13 @@ h3.titre2 {
     cursor:inherit;
 }
 
-.equipe-enfant{
+.equipe-adulte{
     position: absolute;
-    top:0;
-    opacity: 1;
-    -webkit-transition: all 0.4s ease-in 0.2s;
-    -moz-transition: all 0.4s ease-in 0.2s;
-    -o-transition: all 0.4s ease-in 0.2s;
-    transition: all 0.4s ease-in 0.2s
 }
 
-.notreagence-structure .view:hover .equipe-enfant,
-.notreagence-structure .view:focus .equipe-enfant{
+.notreagence-structure .view:hover .equipe-adulte,
+.notreagence-structure .view:focus .equipe-adulte{
     opacity: 0;
-    -webkit-transition: all 0.4s ease-in 0.2s;
-    -moz-transition: all 0.4s ease-in 0.2s;
-    -o-transition: all 0.4s ease-in 0.2s;
     transition: all 0.4s ease-in 0.2s;
 }
 
