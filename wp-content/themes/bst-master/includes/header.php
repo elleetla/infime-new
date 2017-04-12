@@ -12,52 +12,48 @@
 </head>
 
 <body <?php body_class(); ?>>
-
-<!--[if lt IE 8]>
-<div class="alert alert-warning">
-	You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.
-</div>
-<![endif]-->
-
-
 <header>
-<nav class="navbar navbar-default navbar-fixed-top">
-  <div class="container-fluid"><!-- container -->
-    <div class="navbar-header"><!-- navbar-header -->
-      <div id="headerimg">
-        <h1>
-          <a href="<?php echo get_option('home'); ?>">
-              <?php if($id==94){ ?>
-                <img class="logo" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_black_menu.png"><?php bloginfo('name'); ?>
-                <img class="logo-rsp" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_black_menu.png"><?php bloginfo('name'); ?>
-                <?php }else{ ?>
-                <img class="logo" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_white_menu.png"><?php bloginfo('name'); ?>
-                <img class="logo-rsp" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_white_menu.png"><?php bloginfo('name'); ?>
-              <?php } ?>
-          </a>
-        </h1>
-      </div>
-    </div>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid"><!-- container -->
+            <div class="navbar-header"><!-- navbar-header -->
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
 
-    <ul id="nav2">
-        <li><a href="notre-agence/" id="topMenu1"  <?php if($id==94){ ?>class="vosProjets"<?php } ?>>De notre image...</a></li>
-        <li><a href="vos-projets/" id="topMenu2"  <?php if($id==94){ ?>class="vosProjets"<?php } ?>>... à vos images</a></li>
-    </ul>
+                <div id="headerimg">
+                    <h1>
+                        <a href="<?php echo get_option('home'); ?>">
+                        <?php if($id==94){ ?>
+                            <img class="logo" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_black_menu.png"><?php bloginfo('name'); ?>
+                            <img class="logo-rsp" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_black_menu.png"><?php bloginfo('name'); ?>
+                        <?php }else{ ?>
+                            <img class="logo" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_white_menu.png"><?php bloginfo('name'); ?>
+                            <img class="logo-rsp" src="<?php echo esc_url( get_template_directory_uri() ); ?>/images/logo_white_menu.png"><?php bloginfo('name'); ?>
+                        <?php } ?>
+                        </a>
+                    </h1>
+                </div>
+            </div><!-- /.navbar-header -->
 
-    <div class="collapse navbar-collapse" id="navbar">
-      <?php if($id!=94){ ?>
-          <?php
-          wp_nav_menu( array(
-                  'theme_location'    => 'navbar-right',
-                  'depth'             => 2,
-                  'menu_class'        => 'nav navbar-nav navbar-right',
-                  'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-                  'walker'            => new wp_bootstrap_navwalker())
-          );
-          ?>
-      <?php } ?>
-    </div><!-- /.navbar-header -->
+            <ul id="nav2">
+                <li><a href="notre-agence/" id="topMenu1"  <?php if($id==94){ ?>class="vosProjets"<?php } ?>>De notre image...</a></li>
+                <li><a href="vos-projets/" id="topMenu2"  <?php if($id==94){ ?>class="vosProjets"<?php } ?>>... à vos images</a></li>
+            </ul>
 
-  </div><!-- /.container -->
-</nav>
+            <div class="collapse navbar-collapse" id="navbar">
+                <?php if($id!=94){ ?>
+                <?php wp_nav_menu( array(
+                    'theme_location'    => 'navbar-right',
+                    'depth'             => 2,
+                    'menu_class'        => 'nav navbar-nav navbar-right',
+                    'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
+                    'walker'            => new wp_bootstrap_navwalker()) );
+                ?>
+                <?php } ?>
+            </div><!--/.navbar-collapse -->
+        </div><!-- /.container -->
+    </nav>
 </header>
