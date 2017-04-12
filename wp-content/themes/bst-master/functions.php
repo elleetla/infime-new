@@ -3,9 +3,6 @@
 All the functions are in the PHP pages in the functions/ folder.
 */
 
-/* Disable the Admin Bar. */
-add_filter( 'show_admin_bar', '__return_false' );
-
 require_once locate_template('/functions/cleanup.php');
 require_once locate_template('/functions/setup.php');
 require_once locate_template('/functions/enqueues.php');

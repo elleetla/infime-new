@@ -2,13 +2,13 @@
  
 // Do not delete this section
 if (isset($_SERVER['SCRIPT_FILENAME']) && 'comments.php' == basename($_SERVER['SCRIPT_FILENAME'])){
-  die ('Please do not load this page directly. Thanks!'); }
+    die ('Please do not load this page directly. Thanks!'); }
 if ( post_password_required() ) { ?>
-  <div class="alert alert-warning">
-    <?php _e('This post is password protected. Enter the password to view comments.', 'bst'); ?>
-  </div>
+    <div class="alert alert-warning">
+        <?php _e('This post is password protected. Enter the password to view comments.', 'bst'); ?>
+    </div>
 <?php
-  return; 
+    return;
 }
 // End do not delete section
  
@@ -16,16 +16,16 @@ if (have_comments()) : ?>
 
 <h3><?php _e('Feedback', 'bst'); ?></h3>
 <p class="text-muted" style="margin-bottom: 20px;">
- <i class="glyphicon glyphicon-comment"></i>&nbsp; <?php _e('Comments', 'bst');  ?>: <?php comments_number(__('None', 'bst'), '1', '%'); ?>
+    <i class="glyphicon glyphicon-comment"></i>&nbsp; <?php _e('Comments', 'bst');  ?>: <?php comments_number(__('None', 'bst'), '1', '%'); ?>
 </p>
   
 <ol class="commentlist">
-  <?php wp_list_comments('type=comment&callback=bst_comment');?>
+    <?php wp_list_comments('type=comment&callback=bst_comment');?>
 </ol>
 
 <ul class="pagination">
-  <li class="older"><?php previous_comments_link() ?></li>
-  <li class="newer"><?php next_comments_link() ?></li>
+    <li class="older"><?php previous_comments_link() ?></li>
+    <li class="newer"><?php next_comments_link() ?></li>
 </ul>
 
 <?php

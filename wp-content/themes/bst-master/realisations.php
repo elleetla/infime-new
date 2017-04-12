@@ -34,53 +34,55 @@ template name: Réalisations
 </div><!-- fin menu isotope -->
 
 <section id="notreAgence" class="Projets"><!-- section-->
-<div class="container-fluid">
-    <div id="PostProjet">
-        <?php
+    <div class="container-fluid">
+        <div id="PostProjet">
+            <?php
+                query_posts('post_type=recettes');
+                while (have_posts()) : the_post();
+                //Récupérer les catégories de chaque projet
+                $terms = get_the_terms($post->ID, 'origine');
+                $terms_name = array();
+                foreach($terms as $term) {
+                    $terms_name[] = $term->name;
+                }
 
-          query_posts('post_type=recettes');
-            while (have_posts()) : the_post();
-            //Récupérer les catégories de chaque projet
-            $terms = get_the_terms($post->ID, 'origine');
-            $terms_name = array();
-            foreach($terms as $term) { 	$terms_name[] = $term->name; }	
-	foreach($terms  as $term ) {
-        $termslist=$termslist.$term->slug.'  ';
-        }
-       $termslist = substr($termslist,0,-2);
-    
+                foreach($terms  as $term ) {
+                $termslist=$termslist.$term->slug.'  ';
+                }
 
-        ?>
+                $termslist = substr($termslist,0,-2);
+            ?>
 
-                    <?php
-		
+            <?php
+                if (trim(get_field('secteurs')) == 'Logement & Résidentiel'){
+                    $data0 = "secteur1";
+                }
+                elseif (trim(get_field('secteurs')) == 'Tertiaire & Entreprise'){
+                   $data0 = "secteur2";
+                }
+                elseif (trim(get_field('secteurs')) == 'Urbanisme & Aménagement'){
+                    $data0 = "secteur3";
+                }
+                elseif (trim(get_field('secteurs')) == 'Retail & Centre commercial'){
+                    $data0 = "secteur4";
+                }
+            ?>
 
-  			        if (trim(get_field('secteurs')) == 'Logement & Résidentiel'){
-                                    $data0 = "secteur1";
-                                }
-                                elseif (trim(get_field('secteurs')) == 'Tertiaire & Entreprise'){
-                                   $data0 = "secteur2";
-                                }
-                                elseif (trim(get_field('secteurs')) == 'Urbanisme & Aménagement'){
-                                    $data0 = "secteur3";
-                                }
-				elseif (trim(get_field('secteurs')) == 'Retail & Centre commercial'){
-                                    $data0 = "secteur4";
-                                }
-	 	      ?>
-			<?php
-			$cat = trim(get_field ('categorie_de_projet'));
+            <?php
+                $cat = trim(get_field ('categorie_de_projet'));
 
-  			        if ($cat == 'image'){
-                                    $data = "image";
-                                }
-                                elseif ($cat == 'video'){
-                                   $data = "video";
-                                }
-                                elseif ($cat == 'interactive'){
-                                    $data = "interactive";
-                                } ?>
-        <article id="projet-<?PHP the_ID(); ?>" class="col-md-3 col-lg-3 col-sm-6 realisations-structure <?php echo $data0; ?> <?php echo $data; ?>  "><!-- realisation -->
+                if ($cat == 'image'){
+                    $data = "image";
+                }
+                elseif ($cat == 'video'){
+                   $data = "video";
+                }
+                elseif ($cat == 'interactive'){
+                    $data = "interactive";
+                }
+            ?>
+
+            <article id="projet-<?PHP the_ID(); ?>" class="col-md-3 col-lg-3 col-sm-6 realisations-structure <?php echo $data0; ?> <?php echo $data; ?>  "><!-- realisation -->
 
                 <input type="hidden" class="link-value" value="<?php
                 if( !empty( get_field ('lien_image') ) ){
@@ -89,56 +91,51 @@ template name: Réalisations
                 }
                 elseif(!empty(get_field ('lien_interactive')) ){
                     echo  trim(get_field ('lien_interactive'));
-                }elseif(!empty(get_field ('lien_video')) ){
+                }
+                elseif(!empty(get_field ('lien_video')) ){
                     echo  trim(get_field ('lien_video'));
                 }
-            ?>">
+                ?>">
 
-            <input type="hidden" class="content-value" value ="<?php echo strip_tags(get_the_content());?>">
+                <input type="hidden" class="content-value" value ="<?php echo strip_tags(get_the_content());?>">
                 <div class="view"><!-- view -->
                     <div class="mask"><!-- mask -->
                         <?php $cat = trim(get_field ('categorie_de_projet'));
-                                 //var_dump($cat);
-                                if ($cat == 'image'){
-                                    echo '<img data = "image" class="picto-image" src="'.esc_url( get_template_directory_uri() ).'/images/loupe.png">';
-                                }
-                                elseif ($cat == 'video'){
-                                    echo '<img data = "video" class="picto-image" src="'.esc_url( get_template_directory_uri() ).'/images/loupe.png">';
-                                }
-                                elseif ($cat == 'interactive'){
-                                    echo '<img  data = "interactive" class="picto-image" src="'.esc_url( get_template_directory_uri() ).'/images/loupe.png">';
-                                }
-                            ?>
+                            //var_dump($cat);
+                            if ($cat == 'image'){
+                                echo '<img data = "image" class="picto-image" src="'.esc_url( get_template_directory_uri() ).'/images/loupe.png">';
+                            }
+                            elseif ($cat == 'video'){
+                                echo '<img data = "video" class="picto-image" src="'.esc_url( get_template_directory_uri() ).'/images/loupe.png">';
+                            }
+                            elseif ($cat == 'interactive'){
+                                echo '<img  data = "interactive" class="picto-image" src="'.esc_url( get_template_directory_uri() ).'/images/loupe.png">';
+                            }
+                        ?>
+
                         <figcaption id="infos">
                             <h1>
                                 <?php the_title(); ?>
                                 <?php // echo (strlen(get_the_title()) > 20)  ? substr(get_the_title(), 0, 20).'...' : get_the_title(); ?>
                             </h1>
-                            <h2>
-                                <?php the_field('localisations'); ?>
-                            </h2>
+                            <h2><?php the_field('localisations'); ?></h2>
+
                             <div class="type-projet">
                                 <?php the_field('secteurs'); ?>
                             </div>
                         </figcaption><!-- fin infos -->
                     </div><!-- /.mask -->
-                    <a>
-                        <?php the_post_thumbnail(); ?>
-                    </a>
+
+                    <a><?php the_post_thumbnail(); ?></a>
 
                 </div><!-- /.view -->
-				 
-        </article><!-- fin realisaton structure -->
+            </article><!-- fin realisaton structure -->
 
-        <?php endwhile; ?>
-    </div><!-- fin post projet -->
-  </div>
+            <?php endwhile; ?>
+        </div><!-- fin post projet -->
+    </div>
 </section><!-- fin nos projets-->
-    <link rel="stylesheet" href="<?php echo esc_url( get_template_directory_uri() ); ?>/wow/animate.css">
-    <script src="<?php echo esc_url( get_template_directory_uri() ); ?>/wow/wow.min.js"></script>
-      <script>
-       new WOW().init();
-     </script>
+
 <!-- Modal -->
 <div class="modal fade bstmodal" id="DisplayProjet" tabindex="-1" role="dialog" aria-labelledby="DisplayProjetLabel">
     <div class="modal-dialog" role="document">

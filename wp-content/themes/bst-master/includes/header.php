@@ -48,9 +48,7 @@
                 <?php wp_nav_menu( array(
                     'theme_location'    => 'navbar-right',
                     'depth'             => 2,
-                    'menu_class'        => 'nav navbar-nav navbar-right',
-                    'fallback_cb'       => 'wp_bootstrap_navwalker::fallback',
-                    'walker'            => new wp_bootstrap_navwalker()) );
+                    'menu_class'        => 'nav navbar-nav navbar-right') );
                 ?>
                 <?php } ?>
             </div><!--/.navbar-collapse -->
