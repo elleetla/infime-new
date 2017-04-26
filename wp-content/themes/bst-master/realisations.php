@@ -11,23 +11,42 @@ template name: Réalisations
         <nav class="primary">
 	    <h4>Filtrer par</h4>
             <ul>
-                <li style="display:none;"><a href="#" class="selected" data-filter="*">Tous les projets</a></li>
-		<li id="menu1" class=""><a href="#"  rel="#menu1" class="level1">Prestations</a>
-      		<ul rel="#menu1">
-                <li><a href="#" data-filter=".image" rel="#menu1">Image</a></li>
-                
-                <li><a href="#" data-filter=".video" rel="#menu1">Vidéo</a></li>
-		<li><a href="#" data-filter=".interactive" rel="#menu1">Interactif 360°</a></li>
-		</ul>
-            	</li>
-		<li id="menu2" class=""><a href="#" rel="#menu2"  class="level1">Secteurs</a>
-      		<ul rel="#menu2">
-                <li><a href="#" data-filter=".secteur1" rel="#menu2">Logement & Résidentiel</a></li>
-                <li><a href="#" data-filter=".secteur2" rel="#menu2">Tertiaire & Entreprise</a></li>
-                <li><a href="#" data-filter=".secteur3" rel="#menu2">Urbanisme & Aménagement</a></li>
-		<li><a href="#" data-filter=".secteur4" rel="#menu2">Retail & Centres Commerciaux</a></li>
-		</ul>
-            	</li>
+                <!-- sidebar menu (Prestations/Secteurs) -->
+
+                <?php
+                $terms = get_terms("origine"); // get all categories (Image/Vidéo/Interactive 360°/Logement & Résidentiel)
+                $count = count($terms);
+
+                if ( $count > 0 ){
+                    /*
+                    echo '<li id="menu1" class=""><a href="#"  rel="#menu1" class="level1">Prestations</a>
+                        <ul rel="#menu1">';
+                    foreach ( $terms as $term ) {
+                        if(  ) {
+
+
+                        //create a list item with the current term slug for sorting, and name for label
+                        echo "<li><a href='#' data-filter='.".$term->slug."'>" . $term->name . "</a></li>";
+
+                    }
+                    */
+
+                    echo '<li id="menu2" class=""><a href="#" rel="#menu2"  class="level1">Secteurs</a>
+                            <ul rel="#menu2">';
+                        foreach ($terms as $term){
+
+                            $term_id =get_queried_object()->term_id;
+                            $choice = get_field('choix_menu_categorie', $term_id);
+
+                            if( $choice == "secteurs"){
+                                echo "<li><a href='#' data-filter='.".$term->slug."'>" . $term->name . "</a></li>";
+                            }
+
+                        }
+
+                }
+                ?>
+
             </ul>
         </nav><!-- fin nav primary -->
     </div><!-- fin col md -->
@@ -37,52 +56,64 @@ template name: Réalisations
     <div class="container-fluid">
         <div id="PostProjet">
             <?php
-                query_posts('post_type=recettes');
-                while (have_posts()) : the_post();
-                //Récupérer les catégories de chaque projet
-                $terms = get_the_terms($post->ID, 'origine');
-                $terms_name = array();
-                foreach($terms as $term) {
-                    $terms_name[] = $term->name;
-                }
 
-                foreach($terms  as $term ) {
-                $termslist=$termslist.$term->slug.'  ';
-                }
+            $args = array(
+                    'post_type'         =>  'recettes',
+                    'posts_per_page'    =>  -1,
+                    //'tax_query'         => $tax
+                    );
+                $loop = new WP_Query( $args );
+                while ( $loop->have_posts() ) : $loop->the_post();
 
-                $termslist = substr($termslist,0,-2);
             ?>
 
-            <?php
-                if (trim(get_field('secteurs')) == 'Logement & Résidentiel'){
-                    $data0 = "secteur1";
+            <article id="projet-<?PHP the_ID(); ?>" class="col-md-3 col-lg-3 col-sm-6 realisations-structure <?php
+                //display all 2 taxonomies of the realisations
+                $taxos = wp_get_post_terms($post->ID, 'origine');
+                foreach ($taxos as $taxo){
+                    $taxo = $taxo ->slug.' ';
+                    echo $taxo; // image secteur1 ...
                 }
-                elseif (trim(get_field('secteurs')) == 'Tertiaire & Entreprise'){
-                   $data0 = "secteur2";
-                }
-                elseif (trim(get_field('secteurs')) == 'Urbanisme & Aménagement'){
-                    $data0 = "secteur3";
-                }
-                elseif (trim(get_field('secteurs')) == 'Retail & Centre commercial'){
-                    $data0 = "secteur4";
-                }
-            ?>
+                ?>"><!-- realisation -->
 
-            <?php
-                $cat = trim(get_field ('categorie_de_projet'));
+                <?php
+                //for each term, define taxonomy parameters
+                if($taxo == "image secteur1"){
+                    $tax = array(
+                        'relation' => 'AND',
+                        array(
+                            'taxonomy' => 'origine',
+                            'field'    => 'slug',
+                            'terms'    => array( 'image' ),
+                        ),
+                        array(
+                            'taxonomy' => 'origine',
+                            'field'    => 'slug',
+                            'terms'    => array( 'secteur1' ),
+                        ),
+                    );
+                }
+                elseif ($taxo == "video"){
+                    $tax = array(
+                        array(
+                            'taxonomy' => 'origine',
+                            'field'    => 'slug',
+                            'terms'    => array( 'video' ),
+                        )
+                    );
+                }
 
-                if ($cat == 'image'){
-                    $data = "image";
+                elseif ($taxo == "interactive"){
+                    $tax = array(
+                        array(
+                            'taxonomy' => 'origine',
+                            'field'    => 'slug',
+                            'terms'    => array( 'interactive' ),
+                        )
+                    );
                 }
-                elseif ($cat == 'video'){
-                   $data = "video";
-                }
-                elseif ($cat == 'interactive'){
-                    $data = "interactive";
-                }
-            ?>
 
-            <article id="projet-<?PHP the_ID(); ?>" class="col-md-3 col-lg-3 col-sm-6 realisations-structure <?php echo $data0; ?> <?php echo $data; ?>  "><!-- realisation -->
+                ?>
 
                 <input type="hidden" class="link-value" value="<?php
                 if( !empty( get_field ('lien_image') ) ){
@@ -154,5 +185,74 @@ template name: Réalisations
     </div>
 </div>
 <?php wp_reset_query(); ?>
+
+<script>
+    //http://www.designlunatic.com/2012/07/a-continuation-of-the-isotope-tutorial-combination-filters/
+    $(document).ready(function(){
+
+        //isotope the main container
+        var $container = $('#notreAgence');
+
+        $container.isotope({
+            filter: '*',
+            animationOptions: {
+                duration: 750,
+                easing: 'linear',
+                queue: false,
+            }
+        });
+
+        //reorder realisations when user clicks on a link
+        $('#menu1 a').click(function(){
+
+            var prestations = $(this).attr('data-filter');
+
+            $('#menu1').attr('data-active', prestations);
+
+            reorder();
+
+            return false;
+        });
+
+        $('#menu2 a').click(function(){
+
+            var secteurs = $(this).attr('data-filter');
+
+            $('#menu2').attr('data-active', secteurs);
+
+            reorder();
+
+            return false;
+        });
+
+        //create the function "reorder"
+        function reorder(){
+
+            var prestations = $('#menu1').attr('data-active');
+            var secteurs = $('#menu2').attr('data-active');
+
+            //in case the user only click on a prestation or a sector, but not both filters
+            //check if each variable has been defined
+            if (typeof prestations === 'undefined') {
+                prestations = "";
+            }
+            if (typeof secteurs === 'undefined') {
+                secteurs = "";
+            }
+
+            var filterString = prestations+secteurs;
+
+            //tell the container to reorder its content
+            $container.isotope({
+                filter: filterString,
+                animationOptions: {
+                    duration: 750,
+                    easing: 'linear',
+                    queue: false,
+                }
+            });
+        }
+    });
+</script>
 
 <?php get_template_part('includes/footer'); ?>
